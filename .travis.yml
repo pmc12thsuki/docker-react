@@ -14,3 +14,19 @@ script:
   # a script to run our test, -- --coverage make test exit after the test is finished. otherwise the test will never finished and Travis will wait
   # travis will assume that if exit code is 0, the test success. otherwise failed
   - docker run pmc12thsuki/docker-react npm run test -- --coverage 
+
+deploy: 
+  provider: elasticbeanstalk
+  region: "us-east-2"
+  app: "docker-react"
+  env: "DockerReact-env"
+  # s3 bucket name
+  bucket_name: "elasticbeanstalk-us-east-2-108454134942"
+  bucket_path: "docker-react"
+  # only deploy when new code on master branch
+  on:
+    branch: master
+  # aws key which store in travis Environment Variables
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key:
+    secure: "$AWS_SECRET_KEY"
