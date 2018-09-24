@@ -1,0 +1,38 @@
+version: '3'
+
+services: 
+
+  web:
+
+    build:
+      # pull all file to container
+      context: .
+      # location of dockerfile
+      dockerfile: Dockerfile.dev
+
+    ports:
+      - "3000:3000"
+
+    volumes:
+      # do not try to map this folder (node_module) inside container
+      - /app/node_modules
+      # map the folder (outside the container) to the folder inside the container
+      - .:/app
+
+  #create another container to run test solely
+  test: 
+
+    build:
+      # pull all file to container
+      context: .
+      # location of dockerfile
+      dockerfile: Dockerfile.dev
+
+    volumes:
+      # do not try to map this folder (node_module) inside container
+      - /app/node_modules
+      # map the folder (outside the container) to the folder inside the container
+      - .:/app
+    
+      #overwrite commane 
+    command: ["npm", "test"]
