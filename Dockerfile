@@ -12,6 +12,8 @@ RUN npm run build
 
 # second phash, to run the app
 FROM nginx
+# elastic beanstalk will look the EXPOSE port and map directly automaically. (onlu elactic beanstalk does this , not every server)
+EXPOSE 80 
 # copy file from different phase, see the ngnix document, it tells us to copy our static file into usr/share//nginx/html
 COPY --from=builder /app/build /usr/share/nginx/html
 # the default nginx start CMD will start image for us, dont need to specify one
