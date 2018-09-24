@@ -1,0 +1,16 @@
+# tell travis we need sudo permission to run docker
+sudo: required
+
+# need docker-cli install to test our app
+services: 
+  - docker
+
+# before test our app, need to run some command (eg: build our docker image)
+before_install:
+  - docker build -t pmc12thsuki/docker-react -f Dockerfile.dev .
+
+# script need to contain all the command that we need
+script: 
+  # a script to run our test, -- --coverage make test exit after the test is finished. otherwise the test will never finished and Travis will wait
+  # travis will assume that if exit code is 0, the test success. otherwise failed
+  - docker run pmc12thsuki/docker-react npm run test -- --coverage 
