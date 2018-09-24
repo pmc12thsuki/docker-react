@@ -2,7 +2,7 @@
 sudo: required
 
 # need docker-cli install to test our app
-services: 
+services:
   - docker
 
 # before test our app, need to run some command (eg: build our docker image)
